@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Portfolio</title>
+</head>
+<body>
+    <h1 id="heading-about">About me</h1>
+
+    {% if form %}
+    <form id="form-about" action="/portfolio/" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit" id="submit">
+    </form>
+    {% endif %}
+
+    
+  {% if data_ %}
+    <p id="create_name">{{data_.firstname}}</p>
+    <p id="create_lastname">{{data_.lastname}}</p>
+    <p id="create_about">{{data_.about}}</p>
+    <img id="create_img" src={{data_.picture.url}}>
+  {% endif %}
+</body>
+</html>
