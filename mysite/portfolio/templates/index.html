@@ -2,8 +2,11 @@
 
 {% block content %}
 
-{% if not data_ %}
+    {% if not data_ %}
     <a href="edit/"><button id="add_aboutme">Add about me</button></a>
+    {% else %}
+    <a href="edit/"><button id="edit_aboutme">Edit about me</button></a>
+    <a href="delete_about/"><button id="delete_aboutme">Delete about me</button></a>
     {% endif %}
 
   {% if data_ %}
