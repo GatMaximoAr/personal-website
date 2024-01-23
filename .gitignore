@@ -6,4 +6,6 @@ local_settings.py
 venv/
 .env
 db.sqlite3
+.idea
+media/
 todo.txt

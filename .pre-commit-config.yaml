@@ -3,9 +3,9 @@ repos:
     rev: v2.4.0
     hooks:
     -   id: flake8
-       # exclude: ^test/
+        exclude: (mysite/portfolio/tests|mysite/portfolio/migrations)
 -   repo: https://github.com/pycqa/pydocstyle
     rev: 6.3.0
     hooks:
     -   id: pydocstyle
-        # exclude: ^test/
+        exclude: (mysite/portfolio/tests|mysite/portfolio/migrations)
