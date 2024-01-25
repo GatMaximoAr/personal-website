@@ -1,18 +1,20 @@
 from django.shortcuts import render, redirect
-from .forms import AboutMeForm
-from .models import AboutMe
+from .forms import AboutMeForm, ExperienceForm
+from .models import AboutMe, Experience
 from django.core.exceptions import ObjectDoesNotExist
 # from django.http import HttpResponse
 
 
 def index(request):
     """Index of portfolio app."""
-    data = None
+    user = None
     if request.method == "GET":
         user = request.user
-        data = AboutMe.objects.filter(user=user).first()
+        # data = AboutMe.objects.filter(user=user).first()
+        experience = Experience.objects.filter(user=user)
+        user.experience = experience
 
-    return render(request, "index.html", {"data_": data})
+    return render(request, "index.html", {"data_": user})
 
 
 def edit_about(request):
@@ -41,7 +43,7 @@ def edit_about(request):
 
             return redirect("index")
 
-    return render(request, "edit.html", {"form": form})
+    return render(request, "edit_about.html", {"form": form})
 
 
 def delete_about(request):
@@ -53,3 +55,20 @@ def delete_about(request):
         print(e)
 
     return redirect("index")
+
+
+def edit_experience(request):
+    """Edit experience page view."""
+    if request.method == "GET":
+        form = ExperienceForm()
+
+    elif request.method == "POST":
+        form = ExperienceForm(request.POST, request.FILES)
+        if form.is_valid():
+            experience = form.save(commit=False)
+            experience.user = request.user
+            experience.save()
+
+            return redirect("index")
+
+    return render(request, "edit_experience.html", {"form": form})

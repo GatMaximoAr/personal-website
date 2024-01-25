@@ -1,20 +1,37 @@
-{% extends 'base.html' %}
+ {% extends 'base.html' %}
 
 {% block content %}
-
-    {% if not data_ %}
-    <a href="edit/"><button id="add_aboutme">Add about me</button></a>
+    <h1 id="heading-about">About me</h1>
+    {% if not data_.aboutme %}
+    <a href="edit/about/"><button id="add_aboutme">Add about me</button></a>
     {% else %}
-    <a href="edit/"><button id="edit_aboutme">Edit about me</button></a>
-    <a href="delete_about/"><button id="delete_aboutme">Delete about me</button></a>
+    <a href="edit/about/"><button id="edit_aboutme">Edit about me</button></a>
+    <a href="delete/about/"><button id="delete_aboutme">Delete about me</button></a>
     {% endif %}
 
   {% if data_ %}
-    <p id="create_name">{{data_.firstname}}</p>
-    <p id="create_lastname">{{data_.lastname}}</p>
-    <p id="create_about">{{data_.about}}</p>
-    <img id="create_img" src={{data_.picture.url}}>
+    <p id="create_name">{{data_.aboutme.firstname}}</p>
+    <p id="create_lastname">{{data_.aboutme.lastname}}</p>
+    <p id="create_about">{{data_.aboutme.about}}</p>
+    <img id="create_img" src={{data_.aboutme.picture.url}}>
   {% endif %}
+
+ <h1 id="heading-experience">Work experience</h1>
+ <a href="edit/experience/"><button id="add_experience">Add experience</button></a>
+
+     {% if data_.experience %}
+         {% for experience in data_.experience %}
+         <div id="experience_{{ forloop.counter }}">
+              <p>Job:{{experience.job}}</p>
+              <p>Description:{{experience.description}}</p>
+              <p>Current:{{experience.current}}</p>
+              <p>Start date:{{experience.start_date}}</p>
+              <p>Finish date:{{experience.finish_date}}</p>
+              <p>More info:{{experience.link_info}}</p>
+              <img src={{experience.picture.url}}>
+         </div>
+        {% endfor %}
+     {% endif %}
 
 {% endblock %}
 
