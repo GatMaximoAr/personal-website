@@ -3,10 +3,10 @@
 {% block content %}
     <h1 id="heading-about">About me</h1>
     {% if not data_.aboutme %}
-    <a href="edit/about/"><button id="add_aboutme">Add about me</button></a>
+    <a href='{% url "portfolio:add_about" %}'><button id="add_aboutme">Add about me</button></a>
     {% else %}
-    <a href="edit/about/"><button id="edit_aboutme">Edit about me</button></a>
-    <a href="delete/about/"><button id="delete_aboutme">Delete about me</button></a>
+    <a href='{% url "portfolio:edit_about" data_.aboutme.id %}'><button id="edit_aboutme">Edit about me</button></a>
+    <a href='{% url "portfolio:delete_about" %}'><button id="delete_aboutme">Delete about me</button></a>
     {% endif %}
 
   {% if data_ %}
@@ -17,7 +17,7 @@
   {% endif %}
 
  <h1 id="heading-experience">Work experience</h1>
- <a href="edit/experience/"><button id="add_experience">Add experience</button></a>
+ <a href='{% url "portfolio:add_experience" %}'><button id="add_experience">Add experience</button></a>
 
      {% if data_.experience %}
          {% for experience in data_.experience %}

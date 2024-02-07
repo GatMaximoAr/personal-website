@@ -14,7 +14,7 @@ class AboutMeTest(BaseTest):
 
     def test_can_post_new_aboutme(self):
         test_image = self.generate_test_image()
-        response = self.client.post(path="/portfolio/edit/about/", data={
+        response = self.client.post(path="/portfolio/add/about/", data={
             "firstname": "testname", "lastname": "lastname", "about": "about me", "picture": test_image
         })
 
@@ -23,7 +23,7 @@ class AboutMeTest(BaseTest):
 
     def test_can_redirect_after_post(self):
         test_image = self.generate_test_image()
-        response = self.client.post(path="/portfolio/edit/about/", data={
+        response = self.client.post(path="/portfolio/add/about/", data={
             "firstname": "testname", "lastname": "lastname", "about": "about me", "picture": test_image
         })
 
@@ -39,7 +39,7 @@ class AboutMeTest(BaseTest):
 
         # update post
         test_image = self.generate_test_image()
-        response = self.client.post(path="/portfolio/edit/about/", data={
+        response = self.client.post(path="/portfolio/edit/about/1", data={
             "firstname": "another name", "lastname": "lastname", "about": "about me", "picture": test_image
         })
 

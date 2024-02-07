@@ -28,7 +28,7 @@ class ExperienceTest(BaseTest):
         add_button.click()
         self.browser.implicitly_wait(1)
         edit_url = self.browser.current_url
-        self.assertEqual(edit_url, self.live_server_url + "/portfolio/edit/experience/")
+        self.assertEqual(edit_url, self.live_server_url + "/portfolio/add/experience/")
 
         # He notices a form whit Fullname, About and Picture fields
         expected_labels = ['Job:', 'Description:', 'Start date:',

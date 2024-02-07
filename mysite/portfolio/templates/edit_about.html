@@ -3,7 +3,7 @@
 {% block content %}
 
 {% if form %}
-    <form id="form-about" action="/portfolio/edit/about/" method="post" enctype="multipart/form-data">
+    <form id="form-about" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Submit" id="submit">
