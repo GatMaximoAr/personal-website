@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if form %}
+    {% if data_experience %}
+    <form id="form-about" action="{% url 'portfolio:edit_experience' data_experience.id %}" method="post" enctype="multipart/form-data">
+    {% else %}
+        <form id="form-about" action="{% url 'portfolio:edit_experience' %}" method="post" enctype="multipart/form-data">
+    {% endif %}
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit" id="submit">
+    </form>
+    {% endif %}
+
+{% endblock %}
