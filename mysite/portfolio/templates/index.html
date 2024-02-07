@@ -22,7 +22,9 @@
      {% if data_.experience %}
          {% for experience in data_.experience %}
          <div id="experience_{{ forloop.counter }}">
-              <p>Job:{{experience.job}}</p>
+             <a href='{% url "portfolio:edit_experience" experience.id %}'><button id="edit_experience_{{ forloop.counter }}">edit</button></a>
+             <a href='{% url "portfolio:delete_experience" experience.id %}'><button id="delete_experience_{{ forloop.counter }}">delete</button></a>
+              <p id="experience_{{ forloop.counter }}_job">Job:{{experience.job}}</p>
               <p>Description:{{experience.description}}</p>
               <p>Current:{{experience.current}}</p>
               <p>Start date:{{experience.start_date}}</p>

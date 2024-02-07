@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import AboutMeForm, ExperienceForm
 from .models import AboutMe, Experience
 from django.core.exceptions import ObjectDoesNotExist
@@ -41,7 +41,7 @@ def edit_about(request):
             about_me.user = user
             about_me.save()
 
-            return redirect("index")
+            return redirect("portfolio:index")
 
     return render(request, "edit_about.html", {"form": form})
 
@@ -54,21 +54,42 @@ def delete_about(request):
     except ObjectDoesNotExist as e:
         print(e)
 
-    return redirect("index")
+    return redirect("portfolio:index")
 
 
-def edit_experience(request):
+def edit_experience(request, id=None):
     """Edit experience page view."""
     if request.method == "GET":
-        form = ExperienceForm()
+        data_experience = None
+        if id is not None:
+            data_experience = get_object_or_404(Experience, pk=id)
+            form = ExperienceForm(instance=data_experience)
+        else:
+            form = ExperienceForm()
 
-    elif request.method == "POST":
-        form = ExperienceForm(request.POST, request.FILES)
+    if request.method == "POST":
+        if id is not None:
+            data_experience = get_object_or_404(Experience, pk=id)
+            form = ExperienceForm(request.POST, request.FILES, instance=data_experience)
+        else:
+            form = ExperienceForm(request.POST, request.FILES)
+
         if form.is_valid():
             experience = form.save(commit=False)
             experience.user = request.user
             experience.save()
+            return redirect("portfolio:index")
 
-            return redirect("index")
+    context = {
+        'form': form,
+        'data_experience': data_experience
+    }
+    return render(request, "edit_experience.html", context)
 
-    return render(request, "edit_experience.html", {"form": form})
+
+def delete_experience(request, id):
+    """Delete 'Experience' of current user by id."""
+    experience = get_object_or_404(Experience, pk=id)
+    experience.delete()
+
+    return redirect("portfolio:index")
