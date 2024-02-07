@@ -6,6 +6,7 @@ import time
 
 
 class AboutMeTest(BaseTest):
+    reset_sequences = True
 
     def test_can_user_create_about_me(self):
         # Give
@@ -30,7 +31,7 @@ class AboutMeTest(BaseTest):
         add_button.click()
         self.browser.implicitly_wait(1)
         edit_url = self.browser.current_url
-        self.assertEqual(edit_url, self.live_server_url + "/portfolio/edit/about/")
+        self.assertEqual(edit_url, self.live_server_url + "/portfolio/add/about/")
 
         # He notices a form whit Fullname, About and Picture fields
         expected_labels = ['First name:', 'Last name:', 'About:', 'Picture:']
@@ -107,7 +108,7 @@ class AboutMeTest(BaseTest):
         edit_button.click()
         self.browser.implicitly_wait(1)
         edit_url = self.browser.current_url
-        self.assertEqual(edit_url, self.live_server_url + "/portfolio/edit/about/")
+        self.assertEqual(edit_url, self.live_server_url + "/portfolio/edit/about/1")
 
         # He notices that the form has the old data in its fields
         old_data = {"id_firstname": "testname", "id_lastname": "lastname",

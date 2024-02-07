@@ -28,7 +28,7 @@ class ExperienceTest(BaseTest):
                 "current": True, "link_info": "www.google.com",
                 "picture": self.generate_test_image()}
 
-        response = self.client.post(path="/portfolio/edit/experience/", data=data)
+        response = self.client.post(path="/portfolio/add/experience/", data=data)
 
         query_experience = Experience.objects.filter(user=self.user)
 
@@ -40,7 +40,7 @@ class ExperienceTest(BaseTest):
                 "current": True, "link_info": "www.google.com",
                 "picture": self.generate_test_image()}
 
-        response = self.client.post(path="/portfolio/edit/experience/", data=data)
+        response = self.client.post(path="/portfolio/add/experience/", data=data)
 
         self.assertRedirects(response, "/portfolio/")
 
