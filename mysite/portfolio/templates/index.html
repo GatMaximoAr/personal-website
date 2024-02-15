@@ -35,5 +35,22 @@
         {% endfor %}
      {% endif %}
 
+ <h1 id="heading-academic">Academic background</h1>
+ <a href='{% url "portfolio:add_background" %}'><button id="add_background">Add item</button></a>
+ {% if data_.backgrounds %}
+         {% for background in data_.backgrounds %}
+         <div id="academic_background_{{ forloop.counter }}">
+             <a href='{% url "portfolio:edit_background" background.id %}'><button id="edit_academic_background_{{ forloop.counter }}">edit</button></a>
+             <a href='{% url "portfolio:delete_background" background.id %}'><button id="delete_academic_background_{{ forloop.counter }}">delete</button></a>
+              <p id="background_{{ forloop.counter }}_title">Title:{{background.title}}</p>
+              <p>Institution:{{background.institution}}</p>
+              <p>Degree:{{background.degree}}</p>
+              <p>Start date:{{background.start_date}}</p>
+              <p>Finish date:{{background.finish_date}}</p>
+              <p>More info:{{background.link_info}}</p>
+              <img src={{background.picture.url}}>
+         </div>
+        {% endfor %}
+ {% endif %}
 {% endblock %}
 

@@ -10,5 +10,9 @@ urlpatterns = [
     path("delete/about/", views.delete_about, name="delete_about"),
     path("add/experience/", views.AddExperience.as_view(), name="add_experience"),
     path("edit/experience/<int:pk>", views.EditExperience.as_view(), name="edit_experience"),
-    path("delete/experience/<int:id>", views.delete_experience, name="delete_experience")
+    path("delete/experience/<int:id>", views.delete_experience, name="delete_experience"),
+    path("add/academic-background/", views.AddBackground.as_view(), name="add_background"),
+    path("edit/academic-background/<int:pk>", views.EditBackground.as_view(),
+         name="edit_background"),
+    path("delete/academic-background/<int:id>", views.delete_background, name="delete_background")
 ]

@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
-from .forms import AboutMeForm, ExperienceForm
-from .models import AboutMe, Experience
+from .forms import AboutMeForm, ExperienceForm, BackgroundForm
+from .models import AboutMe, Experience, Background
 
 
 def index(request):
@@ -13,7 +13,9 @@ def index(request):
         user = request.user
         # data = AboutMe.objects.filter(user=user).first()
         experience = Experience.objects.filter(user=user)
+        backgrounds = Background.objects.filter(user=user)
         user.experience = experience
+        user.backgrounds = backgrounds
 
     return render(request, "index.html", {"data_": user})
 
@@ -89,5 +91,41 @@ def delete_experience(request, id):
     """Delete 'Experience' of current user by id."""
     experience = get_object_or_404(Experience, pk=id)
     experience.delete()
+
+    return redirect("portfolio:index")
+
+
+class AddBackground(CreateView):
+    """Create academic background record."""
+
+    model = Background
+    form_class = BackgroundForm
+    template_name = 'edit_background.html'
+    success_url = reverse_lazy('portfolio:index')
+
+    def form_valid(self, form):
+        """Validate, add the current user and save the form."""
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class EditBackground(UpdateView):
+    """Update academic background record."""
+
+    model = Background
+    form_class = BackgroundForm
+    template_name = 'edit_background.html'
+    success_url = reverse_lazy('portfolio:index')
+
+    def form_valid(self, form):
+        """Validate, add the current user and save the form."""
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+def delete_background(request, id):
+    """Delete 'Academic background' of current user by id."""
+    background = get_object_or_404(Background, pk=id)
+    background.delete()
 
     return redirect("portfolio:index")
