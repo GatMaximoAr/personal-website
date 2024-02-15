@@ -53,3 +53,18 @@ class Background(models.Model):
         return f"title={self.title}, institution={self.institution}, degree={self.degree}," \
                f" start_date={self.start_date}, finish_date={self.finish_date}, " \
                f" link_info={self.link_info}, picture={self.picture}"
+
+
+class Project(models.Model):
+    """Abstract class 'Project' of Django ORM."""
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100, null=False)
+    description = models.TextField()
+    link_info = models.CharField(max_length=100)
+    picture = models.ImageField(upload_to="project_picture/", null=False)
+
+    def __str__(self):
+        """Model str representation."""
+        return f"title={self.title}, description={self.description}, " \
+               f" link_info={self.link_info}, picture={self.picture}"

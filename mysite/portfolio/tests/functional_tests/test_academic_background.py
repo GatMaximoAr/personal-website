@@ -30,7 +30,8 @@ class AcademicBackgroundTest(BaseTest):
         edit_url = self.browser.current_url
         self.assertEqual(edit_url, self.live_server_url + "/portfolio/add/academic-background/")
 
-        # He notices a form whit Institution, degree, Link, start and finish date and picture fields
+        # He notices a form whit Title, Institution, degree, Link, start and finish date
+        # and picture fields
         expected_labels = ["Title:", 'Institution:', 'Degree:', 'Link:',
                            'Start date:', 'Finish date:', 'Picture:']
         self.labels_in_form(expected_labels)

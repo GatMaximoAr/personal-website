@@ -1,5 +1,5 @@
 from django import forms
-from .models import AboutMe, Experience, Background
+from .models import AboutMe, Experience, Background, Project
 
 
 class AboutMeForm(forms.ModelForm):
@@ -53,3 +53,18 @@ class BackgroundForm(forms.ModelForm):
         model = Background
         fields = ["title", "institution", "degree",
                   "link_info", "start_date", "finish_date", "picture"]
+
+
+class ProjectForm(forms.ModelForm):
+    """Abstract class 'Project' of Django forms."""
+
+    title = forms.CharField(max_length=100, required=True, label="Title")
+    description = forms.CharField(widget=forms.Textarea, label="Description", required=True)
+    link_info = forms.URLField(required=True, label="Link")
+    picture = forms.FileField(label="Picture", required=True)
+
+    class Meta:
+        """Meta form class."""
+
+        model = Project
+        fields = ["title", "description", "link_info", "picture"]

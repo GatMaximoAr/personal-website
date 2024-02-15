@@ -52,5 +52,20 @@
          </div>
         {% endfor %}
  {% endif %}
+
+ <h1 id="heading-project">Projects</h1>
+ <a href='{% url "portfolio:add_project" %}'><button id="add_project">Add item</button></a>
+ {% if data_.projects %}
+         {% for project in data_.projects %}
+         <div id="project_{{ forloop.counter }}">
+             <a href='{% url "portfolio:edit_project" project.id %}'><button id="edit_project_{{ forloop.counter }}">edit</button></a>
+             <a href='{% url "portfolio:delete_project" project.id %}'><button id="delete_project_{{ forloop.counter }}">delete</button></a>
+              <p id="project_{{ forloop.counter }}_title">Title:{{project.title}}</p>
+              <p>Description:{{project.description}}</p>
+              <p>More info:{{project.link_info}}</p>
+              <img src={{project.picture.url}}>
+         </div>
+        {% endfor %}
+ {% endif %}
 {% endblock %}
 
