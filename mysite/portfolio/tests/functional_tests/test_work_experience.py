@@ -16,21 +16,22 @@ class ExperienceTest(BaseTest):
         page_title = self.browser.title
         self.assertEqual(page_title, "Portfolio")
 
-        # He notices a heading that says "About me".
+        # He notices a heading that says "Work experience".
         heading_experience = self.browser.find_element(By.ID, "heading-experience")
         self.assertEqual(heading_experience.text, "Work experience")
 
-        # and a button 'add about me'
+        # and a button 'Add experience'
         add_button = self.browser.find_element(By.ID, "add_experience")
         self.assertEqual(add_button.text, "Add experience")
 
-        # when he clicked the button is redirected to '/portfolio/edit'
+        # when he clicked the button is redirected to '/portfolio/add/experience'
         add_button.click()
         self.browser.implicitly_wait(1)
         edit_url = self.browser.current_url
         self.assertEqual(edit_url, self.live_server_url + "/portfolio/add/experience/")
 
-        # He notices a form whit Fullname, About and Picture fields
+        # He notices a form whit Job, Description, Start date,
+        # Finish date, Current, Link, and Picture fields
         expected_labels = ['Job:', 'Description:', 'Start date:',
                            'Finish date:', 'Current:', 'Link:', 'Picture:']
         self.labels_in_form(expected_labels)
@@ -79,7 +80,7 @@ class ExperienceTest(BaseTest):
         page_title = self.browser.title
         self.assertEqual(page_title, "Portfolio")
 
-        # He notices a heading that says "About me".
+        # He notices a heading that says "Work experience".
         heading_experience = self.browser.find_element(By.ID, "heading-experience")
         self.assertEqual(heading_experience.text, "Work experience")
 
@@ -157,7 +158,7 @@ class ExperienceTest(BaseTest):
 
         self.login_user_visit("/portfolio/")
 
-        # He notices an "delete" button next to the work experience
+        # He notices a "delete" button next to the work experience
         # time.sleep(30)
         experience_delete_button = self.browser.find_element(By.ID, "delete_experience_1")
 

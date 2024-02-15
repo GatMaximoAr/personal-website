@@ -18,3 +18,8 @@ class PortfolioPagesTest(BaseTest):
         response = self.client.get('/portfolio/add/experience/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "edit_experience.html")
+
+    def test_can_get_edit_background_page(self):
+        response = self.client.get('/portfolio/add/academic-background/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "edit_background.html")
