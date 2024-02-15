@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
-from .forms import AboutMeForm, ExperienceForm, BackgroundForm
-from .models import AboutMe, Experience, Background
+from .forms import AboutMeForm, ExperienceForm, BackgroundForm, ProjectForm
+from .models import AboutMe, Experience, Background, Project
 
 
 def index(request):
@@ -14,8 +14,10 @@ def index(request):
         # data = AboutMe.objects.filter(user=user).first()
         experience = Experience.objects.filter(user=user)
         backgrounds = Background.objects.filter(user=user)
+        projects = Project.objects.filter(user=user)
         user.experience = experience
         user.backgrounds = backgrounds
+        user.projects = projects
 
     return render(request, "index.html", {"data_": user})
 
@@ -127,5 +129,41 @@ def delete_background(request, id):
     """Delete 'Academic background' of current user by id."""
     background = get_object_or_404(Background, pk=id)
     background.delete()
+
+    return redirect("portfolio:index")
+
+
+class AddProject(CreateView):
+    """Create Project record."""
+
+    model = Project
+    form_class = ProjectForm
+    template_name = 'edit_project.html'
+    success_url = reverse_lazy('portfolio:index')
+
+    def form_valid(self, form):
+        """Validate, add the current user and save the form."""
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class EditProject(UpdateView):
+    """Update project record."""
+
+    model = Project
+    form_class = ProjectForm
+    template_name = 'edit_project.html'
+    success_url = reverse_lazy('portfolio:index')
+
+    def form_valid(self, form):
+        """Validate, add the current user and save the form."""
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+def delete_project(request, id):
+    """Delete 'Project' of current user by id."""
+    project = get_object_or_404(Project, pk=id)
+    project.delete()
 
     return redirect("portfolio:index")

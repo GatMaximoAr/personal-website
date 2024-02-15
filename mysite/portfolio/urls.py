@@ -14,5 +14,9 @@ urlpatterns = [
     path("add/academic-background/", views.AddBackground.as_view(), name="add_background"),
     path("edit/academic-background/<int:pk>", views.EditBackground.as_view(),
          name="edit_background"),
-    path("delete/academic-background/<int:id>", views.delete_background, name="delete_background")
+    path("delete/academic-background/<int:id>", views.delete_background, name="delete_background"),
+    path("add/project/", views.AddProject.as_view(), name="add_project"),
+    path("edit/project/<int:pk>", views.EditProject.as_view(),
+         name="edit_project"),
+    path("delete/project/<int:id>", views.delete_project, name="delete_project")
 ]
