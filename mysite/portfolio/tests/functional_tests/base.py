@@ -2,12 +2,13 @@ from django.test import LiveServerTestCase
 from django.contrib.auth.models import User
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
 
 
 class BaseTest(LiveServerTestCase):
 
     def setUp(self) -> None:
-        self.user = User.objects.create_user('username', 'email@example.com', 'password')
+        self.user = User.objects.create_user('maximo', 'email@example.com', 'password')
         self.user.save()
 
         # op = webdriver.ChromeOptions()
@@ -41,3 +42,10 @@ class BaseTest(LiveServerTestCase):
             search_dom_element = self.browser.find_element(By.ID, k)
 
             self.assertEqual(search_dom_element.text, v)
+
+    def element_is_not_in_page(self, id_string):
+        try:
+            self.browser.find_element(By.ID, id_string)
+            self.fail("se encontro el elemento " + id_string)
+        except NoSuchElementException as e:
+            self.assertTrue(True)

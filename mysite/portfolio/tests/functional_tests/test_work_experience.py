@@ -1,7 +1,6 @@
 from .base import BaseTest
 from ...models import Experience
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
 import time
 
 
@@ -167,8 +166,28 @@ class ExperienceTest(BaseTest):
 
         # Then the page in refreshed and the work experience item is gone
 
-        try:
-            experience_1 = self.browser.find_element(By.ID, "experience_1")
-            self.assertTrue(False)
-        except NoSuchElementException as e:
-            self.assertTrue(True)
+        self.element_is_not_in_page("experience_1")
+
+    def test_anonymous_user_cant_crud_experience(self):
+        experience = Experience(job="Developer", description="Test description",
+                                start_date="2001-10-21", finish_date="2002-10-23",
+                                current=True, link_info="www.google.com",
+                                picture="/home/maximo/Firefox_wallpaper.png", user=self.user)
+        experience.save()
+
+        # if anonymous view portfolio page he can't see Create, Update, Delete
+        # buttons
+
+        self.browser.get(self.live_server_url + "/portfolio")
+
+        # He can't see add experience me button
+
+        self.element_is_not_in_page("add_experience")
+
+        # He can't see update experience me button
+
+        self.element_is_not_in_page("edit_experience_1")
+
+        # He can't see delete experience me button
+
+        self.element_is_not_in_page("delete_experience_1")

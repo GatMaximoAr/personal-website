@@ -1,7 +1,6 @@
 from .base import BaseTest
 from ...models import Background
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
 import time
 
 
@@ -156,8 +155,28 @@ class AcademicBackgroundTest(BaseTest):
 
         # Then the page in refreshed and the academic item is gone
 
-        try:
-            background_1 = self.browser.find_element(By.ID, "academic_background_1")
-            self.assertTrue(False)
-        except NoSuchElementException as e:
-            self.assertTrue(True)
+        self.element_is_not_in_page("academic_background_1")
+
+    def test_anonymous_user_cant_crud_background(self):
+        background = Background(title="Developer", institution="someone", degree="Bachelor",
+                                start_date="2001-10-21", finish_date="2002-10-23",
+                                link_info="https://www.google.com", picture="/home/maximo/Firefox_wallpaper.png",
+                                user=self.user)
+        background.save()
+
+        # if anonymous view portfolio page he can't see Create, Update, Delete
+        # buttons
+
+        self.browser.get(self.live_server_url + "/portfolio")
+
+        # He can't see add background me button
+
+        self.element_is_not_in_page("add_background")
+
+        # He can't see update background me button
+
+        self.element_is_not_in_page("edit_academic_background_1")
+
+        # He can't see delete background me button
+
+        self.element_is_not_in_page("delete_academic_background_1")
