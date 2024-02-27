@@ -1,7 +1,6 @@
 from .base import BaseTest
 from ...models import Project
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
 import time
 
 
@@ -142,8 +141,28 @@ class ProjectTest(BaseTest):
 
         # Then the page in refreshed and the project item is gone
 
-        try:
-            project_1 = self.browser.find_element(By.ID, "project_1")
-            self.assertTrue(False)
-        except NoSuchElementException as e:
-            self.assertTrue(True)
+        self.element_is_not_in_page("project_1")
+
+    def test_anonymous_user_cant_crud_project(self):
+        project = Project(title="Portfolio", description="some description",
+                          link_info="https://www.google.com",
+                          picture="/home/maximo/Firefox_wallpaper.png",
+                          user=self.user)
+        project.save()
+
+        # if anonymous view portfolio page he can't see Create, Update, Delete
+        # buttons
+
+        self.browser.get(self.live_server_url + "/portfolio")
+
+        # He can't see add about me button
+
+        self.element_is_not_in_page("add_project")
+
+        # He can't see update about me button
+
+        self.element_is_not_in_page("edit_project_1")
+
+        # He can't see delete about me button
+
+        self.element_is_not_in_page("delete_project_1")

@@ -7,9 +7,10 @@ from django.contrib.auth.models import User
 class BaseTest(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user('username', 'email@example.com', 'password')
+        self.user = User.objects.create_user('maximo', 'email@example.com', 'password')
+        self.user.save()
         self.client = Client()
-        self.client.login(username='username', password='password')
+        self.client.force_login(user=self.user)
 
     @staticmethod
     def generate_test_image():

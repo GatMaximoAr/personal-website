@@ -2,70 +2,88 @@
 
 {% block content %}
     <h1 id="heading-about">About me</h1>
-    {% if not data_.aboutme %}
-    <a href='{% url "portfolio:add_about" %}'><button id="add_aboutme">Add about me</button></a>
-    {% else %}
+    {% if not data_.aboutme and user.is_authenticated %}
+        <a href='{% url "portfolio:add_about" %}'><button id="add_aboutme">Add about me</button></a>
+    {% endif %}
+    {% if data_.aboutme and user.is_authenticated %}
     <a href='{% url "portfolio:edit_about" data_.aboutme.id %}'><button id="edit_aboutme">Edit about me</button></a>
     <a href='{% url "portfolio:delete_about" %}'><button id="delete_aboutme">Delete about me</button></a>
     {% endif %}
 
-  {% if data_ %}
+  {% if data_.aboutme %}
     <p id="create_name">{{data_.aboutme.firstname}}</p>
     <p id="create_lastname">{{data_.aboutme.lastname}}</p>
     <p id="create_about">{{data_.aboutme.about}}</p>
     <img id="create_img" src={{data_.aboutme.picture.url}}>
   {% endif %}
 
- <h1 id="heading-experience">Work experience</h1>
- <a href='{% url "portfolio:add_experience" %}'><button id="add_experience">Add experience</button></a>
-
-     {% if data_.experience %}
-         {% for experience in data_.experience %}
-         <div id="experience_{{ forloop.counter }}">
-             <a href='{% url "portfolio:edit_experience" experience.id %}'><button id="edit_experience_{{ forloop.counter }}">edit</button></a>
-             <a href='{% url "portfolio:delete_experience" experience.id %}'><button id="delete_experience_{{ forloop.counter }}">delete</button></a>
-              <p id="experience_{{ forloop.counter }}_job">Job:{{experience.job}}</p>
-              <p>Description:{{experience.description}}</p>
-              <p>Current:{{experience.current}}</p>
-              <p>Start date:{{experience.start_date}}</p>
-              <p>Finish date:{{experience.finish_date}}</p>
-              <p>More info:{{experience.link_info}}</p>
-              <img src={{experience.picture.url}}>
-         </div>
-        {% endfor %}
+     <h1 id="heading-experience">Work experience</h1>
+     {% if user.is_authenticated %}
+        <a href='{% url "portfolio:add_experience" %}'><button id="add_experience">Add experience</button></a>
      {% endif %}
 
- <h1 id="heading-academic">Academic background</h1>
- <a href='{% url "portfolio:add_background" %}'><button id="add_background">Add item</button></a>
- {% if data_.backgrounds %}
-         {% for background in data_.backgrounds %}
-         <div id="academic_background_{{ forloop.counter }}">
-             <a href='{% url "portfolio:edit_background" background.id %}'><button id="edit_academic_background_{{ forloop.counter }}">edit</button></a>
-             <a href='{% url "portfolio:delete_background" background.id %}'><button id="delete_academic_background_{{ forloop.counter }}">delete</button></a>
-              <p id="background_{{ forloop.counter }}_title">Title:{{background.title}}</p>
-              <p>Institution:{{background.institution}}</p>
-              <p>Degree:{{background.degree}}</p>
-              <p>Start date:{{background.start_date}}</p>
-              <p>Finish date:{{background.finish_date}}</p>
-              <p>More info:{{background.link_info}}</p>
-              <img src={{background.picture.url}}>
-         </div>
-        {% endfor %}
- {% endif %}
+    {% if data_.experience %}
+        {% for experience in data_.experience %}
+             <div id="experience_{{ forloop.counter }}">
+                 {% if user.is_authenticated %}
+                    <a href='{% url "portfolio:edit_experience" experience.id %}'><button id="edit_experience_{{ forloop.counter }}">edit</button></a>
+                    <a href='{% url "portfolio:delete_experience" experience.id %}'><button id="delete_experience_{{ forloop.counter }}">delete</button></a>
+                {% endif %}
 
- <h1 id="heading-project">Projects</h1>
- <a href='{% url "portfolio:add_project" %}'><button id="add_project">Add item</button></a>
- {% if data_.projects %}
-         {% for project in data_.projects %}
-         <div id="project_{{ forloop.counter }}">
-             <a href='{% url "portfolio:edit_project" project.id %}'><button id="edit_project_{{ forloop.counter }}">edit</button></a>
-             <a href='{% url "portfolio:delete_project" project.id %}'><button id="delete_project_{{ forloop.counter }}">delete</button></a>
-              <p id="project_{{ forloop.counter }}_title">Title:{{project.title}}</p>
-              <p>Description:{{project.description}}</p>
-              <p>More info:{{project.link_info}}</p>
-              <img src={{project.picture.url}}>
-         </div>
+                  <p id="experience_{{ forloop.counter }}_job">Job:{{experience.job}}</p>
+                  <p>Description:{{experience.description}}</p>
+                  <p>Current:{{experience.current}}</p>
+                  <p>Start date:{{experience.start_date}}</p>
+                  <p>Finish date:{{experience.finish_date}}</p>
+                  <p>More info:{{experience.link_info}}</p>
+                  <img src={{experience.picture.url}}>
+             </div>
         {% endfor %}
- {% endif %}
+    {% endif %}
+
+     <h1 id="heading-academic">Academic background</h1>
+     {% if user.is_authenticated %}
+        <a href='{% url "portfolio:add_background" %}'><button id="add_background">Add item</button></a>
+     {% endif %}
+
+     {% if data_.backgrounds %}
+             {% for background in data_.backgrounds %}
+             <div id="academic_background_{{ forloop.counter }}">
+                 {% if user.is_authenticated %}
+                    <a href='{% url "portfolio:edit_background" background.id %}'><button id="edit_academic_background_{{ forloop.counter }}">edit</button></a>
+                    <a href='{% url "portfolio:delete_background" background.id %}'><button id="delete_academic_background_{{ forloop.counter }}">delete</button></a>
+                 {% endif %}
+
+                  <p id="background_{{ forloop.counter }}_title">Title:{{background.title}}</p>
+                  <p>Institution:{{background.institution}}</p>
+                  <p>Degree:{{background.degree}}</p>
+                  <p>Start date:{{background.start_date}}</p>
+                  <p>Finish date:{{background.finish_date}}</p>
+                  <p>More info:{{background.link_info}}</p>
+                  <img src={{background.picture.url}}>
+             </div>
+            {% endfor %}
+     {% endif %}
+
+     <h1 id="heading-project">Projects</h1>
+    {% if user.is_authenticated %}
+        <a href='{% url "portfolio:add_project" %}'><button id="add_project">Add item</button></a>
+    {% endif %}
+
+     {% if data_.projects %}
+             {% for project in data_.projects %}
+             <div id="project_{{ forloop.counter }}">
+                 {% if user.is_authenticated %}
+                    <a href='{% url "portfolio:edit_project" project.id %}'><button id="edit_project_{{ forloop.counter }}">edit</button></a>
+                    <a href='{% url "portfolio:delete_project" project.id %}'><button id="delete_project_{{ forloop.counter }}">delete</button></a>
+                {% endif %}
+
+                  <p id="project_{{ forloop.counter }}_title">Title:{{project.title}}</p>
+                  <p>Description:{{project.description}}</p>
+                  <p>More info:{{project.link_info}}</p>
+                  <img src={{project.picture.url}}>
+             </div>
+            {% endfor %}
+     {% endif %}
 {% endblock %}
 

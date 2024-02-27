@@ -4,13 +4,14 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
 from .forms import AboutMeForm, ExperienceForm, BackgroundForm, ProjectForm
 from .models import AboutMe, Experience, Background, Project
+from django.contrib.auth.models import User
 
 
 def index(request):
     """Index of portfolio app."""
     user = None
     if request.method == "GET":
-        user = request.user
+        user = User.objects.get_by_natural_key("maximo")
         # data = AboutMe.objects.filter(user=user).first()
         experience = Experience.objects.filter(user=user)
         backgrounds = Background.objects.filter(user=user)

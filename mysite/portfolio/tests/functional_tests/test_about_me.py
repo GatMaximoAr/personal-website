@@ -171,3 +171,25 @@ class AboutMeTest(BaseTest):
         delete_button.click()
         add_button = self.browser.find_element(By.ID, "add_aboutme")
         self.assertEqual(add_button.text, "Add about me")
+
+    def test_anonymous_user_cant_crud_about(self):
+        about_me = AboutMe(user=self.user, firstname="testname", lastname="lastname", about="about me",
+                           picture="/home/maximo/Firefox_wallpaper.png")
+        about_me.save()
+
+        # if anonymous view portfolio page he can't see Create, Update, Delete
+        # buttons
+
+        self.browser.get(self.live_server_url + "/portfolio")
+
+        # He can't see add about me button
+
+        self.element_is_not_in_page("add_aboutme")
+
+        # He can't see update about me button
+
+        self.element_is_not_in_page("edit_aboutme")
+
+        # He can't see delete about me button
+
+        self.element_is_not_in_page("delete_aboutme")
