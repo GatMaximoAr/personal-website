@@ -11,9 +11,9 @@ class BaseTest(LiveServerTestCase):
         self.user = User.objects.create_user('maximo', 'email@example.com', 'password')
         self.user.save()
 
-        # op = webdriver.ChromeOptions()
-        # op.add_argument('headless')
-        self.browser = webdriver.Chrome()
+        op = webdriver.ChromeOptions()
+        op.add_argument('headless')
+        self.browser = webdriver.Chrome(options=op)
 
     def tearDown(self) -> None:
         self.browser.quit()
