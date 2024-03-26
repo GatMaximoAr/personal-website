@@ -19,10 +19,6 @@ class AboutMeTest(BaseTest):
         page_title = self.browser.title
         self.assertEqual(page_title, "Portfolio")
 
-        # He notices a heading that says "About me".
-        heading_about = self.browser.find_element(By.ID, "heading-about")
-        self.assertEqual(heading_about.text, "About me")
-
         # and a button 'add about me'
         add_button = self.browser.find_element(By.ID, "add_aboutme")
         self.assertEqual(add_button.text, "Add about me")
@@ -56,8 +52,8 @@ class AboutMeTest(BaseTest):
         # and see the new data on page
 
         search_data_in_page = {
-            "create_name": field_data["id_firstname"], "create_lastname": field_data["id_lastname"]
-            , "create_about": field_data["id_about"]
+            "create_name": field_data["id_firstname"] + " " + field_data["id_lastname"],
+            "create_about": field_data["id_about"]
         }
         self.finding_data_on_page(search_data_in_page)
 
@@ -75,13 +71,9 @@ class AboutMeTest(BaseTest):
         page_title = self.browser.title
         self.assertEqual(page_title, "Portfolio")
 
-        # He notices a heading that says "About me".
-        heading_about = self.browser.find_element(By.ID, "heading-about")
-        self.assertEqual(heading_about.text, "About me")
-
         # Then he saw appear the data on the page
         search_data_in_page = {
-            "create_name": "testname", "create_lastname": "lastname"
+            "create_name": "testname lastname"
             , "create_about": "about me"
         }
         self.finding_data_on_page(search_data_in_page)
@@ -95,10 +87,6 @@ class AboutMeTest(BaseTest):
                            picture="/home/maximo/Firefox_wallpaper.png")
         about_me.save()
         self.login_user_visit("/portfolio")
-
-        # He notices a heading that says "About me".
-        heading_about = self.browser.find_element(By.ID, "heading-about")
-        self.assertEqual(heading_about.text, "About me")
 
         # and a button 'add about me'
         edit_button = self.browser.find_element(By.ID, "edit_aboutme")
@@ -139,8 +127,8 @@ class AboutMeTest(BaseTest):
 
         # and see the new data on page
         search_data_in_page = {
-            "create_name": field_data["id_firstname"], "create_lastname": field_data["id_lastname"]
-            , "create_about": field_data["id_about"]
+            "create_name": field_data["id_firstname"] + " " + field_data["id_lastname"],
+            "create_about": field_data["id_about"]
         }
         self.finding_data_on_page(search_data_in_page)
 
@@ -153,10 +141,6 @@ class AboutMeTest(BaseTest):
                            picture="/home/maximo/Firefox_wallpaper.png")
         about_me.save()
         self.login_user_visit("/portfolio")
-
-        # He notices a heading that says "About me".
-        heading_about = self.browser.find_element(By.ID, "heading-about")
-        self.assertEqual(heading_about.text, "About me")
 
         # a button 'Edit about me'
         edit_button = self.browser.find_element(By.ID, "edit_aboutme")

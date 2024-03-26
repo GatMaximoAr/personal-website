@@ -1,21 +1,62 @@
  {% extends 'base.html' %}
 
 {% block content %}
-    <h1 id="heading-about">About me</h1>
-    {% if not data_.aboutme and user.is_authenticated %}
-        <a href='{% url "portfolio:add_about" %}'><button id="add_aboutme">Add about me</button></a>
-    {% endif %}
-    {% if data_.aboutme and user.is_authenticated %}
-    <a href='{% url "portfolio:edit_about" data_.aboutme.id %}'><button id="edit_aboutme">Edit about me</button></a>
-    <a href='{% url "portfolio:delete_about" %}'><button id="delete_aboutme">Delete about me</button></a>
-    {% endif %}
 
-  {% if data_.aboutme %}
-    <p id="create_name">{{data_.aboutme.firstname}}</p>
-    <p id="create_lastname">{{data_.aboutme.lastname}}</p>
-    <p id="create_about">{{data_.aboutme.about}}</p>
-    <img id="create_img" src={{data_.aboutme.picture.url}}>
-  {% endif %}
+ <div title="About me" id="About_me_section"
+          class="p-5 text-center bg-image"
+          style="
+            background-color: rgba(0, 255, 66, 0.78);
+            height: 500px;
+          "
+        >
+          <div>
+            <div class="row text-white">
+                {% if not data_.aboutme and user.is_authenticated %}
+                    <a href='{% url "portfolio:add_about" %}'><button id="add_aboutme">Add about me</button></a>
+                {% endif %}
+
+                {% if data_.aboutme %}
+                    <div class="col-6">
+                    <img id="create_img" src={{data_.aboutme.picture.url}}
+                         style="width: 400px; height: 400px;" class="img-fluid">
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="d-flex col-8 justify-content-end">
+                            <h2>Full stack developer</h2>
+                        </div>
+                        {% if data_.aboutme and user.is_authenticated %}
+                        <div class="col-4">
+                            <div class="row">
+                                    <div class="col-6">
+                                        <a href='{% url "portfolio:edit_about" data_.aboutme.id %}'>
+                                            <button id="edit_aboutme">Edit about me</button>
+                                        </a>
+                                    </div>
+                                    <div class="col-6">
+                                        <a href='{% url "portfolio:delete_about" %}'>
+                                            <button id="delete_aboutme">Delete about me</button>
+                                        </a>
+                                    </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-flex justify-content-start ps-3">
+                        <h3 id="create_name">{{data_.aboutme.firstname}} {{data_.aboutme.lastname}}</h3>
+                    </div>
+
+                    <div class="d-flex justify-content-center text-start">
+                            <div class="overflow-auto" style="width: 600px; height: 200px;">
+                            <p id="create_about">{{data_.aboutme.about}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+          </div>
+        </div>
 
      <h1 id="heading-experience">Work experience</h1>
      {% if user.is_authenticated %}
