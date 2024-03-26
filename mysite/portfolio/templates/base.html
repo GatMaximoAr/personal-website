@@ -1,4 +1,6 @@
-<!doctype html>
+{% load static %}
+
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -7,8 +9,11 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
         {% load bootstrap5 %}
+
         {% bootstrap_css %}
         {% bootstrap_javascript %}
+
+        <link rel="stylesheet" href="{% static '/css/styles.css' %}">
 
         <title>Portfolio</title>
     </head>
@@ -16,7 +21,7 @@
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="navbar-brand" href="#">Website</a>
             <button
               class="navbar-toggler"
               type="button"
@@ -31,11 +36,6 @@
             >
               <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
-                <a class="nav-link" href="#">Features</a>
-                <a class="nav-link" href="#">Pricing</a>
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"
-                  >Disabled</a
-                >
               </div>
             </div>
           </div>
